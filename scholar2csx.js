@@ -38,7 +38,14 @@ var ScholarFunc = {
 	addOtherWebSearches: function() {
 		var titles = document.getElementsByTagName('H3');
 		for (var t in titles) {
-			titles[t].innerHTML += " - <a href=\"http://citeseerx.ist.psu.edu/search?q=" + titles[t].childNodes[0].innerHTML.replace(/<[^\>]*>/g, "") + "\">CiteSeerX</a>";
+			var title_text = titles[t].childNodes[0].innerHTML.replace(/<[^\>]*>/g, "");
+			// Correct for PDF links
+			if (title_text == "[PDF]") {
+				title_text = titles[t].childNodes[3].innerHTML.replace(/<[^\>]*>/g, "");
+					titles[t].innerHTML += " - <a href=\"http://citeseerx.ist.psu.edu/search?q=" + title_text + "\">CiteSeerX</a>";
+			} else {
+				titles[t].innerHTML += " - <a href=\"http://citeseerx.ist.psu.edu/search?q=" + title_text + "\">CiteSeerX</a>";
+			}
 		}
 	},
 }
